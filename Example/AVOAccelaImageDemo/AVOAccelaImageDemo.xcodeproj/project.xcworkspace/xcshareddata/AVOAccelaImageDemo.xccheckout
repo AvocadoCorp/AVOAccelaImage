@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B64F87BC-2521-4FC6-9A56-88A9D1C3577E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>AVOAccelaImageDemo</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>222F845A-8132-4011-87E0-36342FA0007F</key>
+		<string>https://github.com/AvocadoCorp/AVOAccelaImage.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Example/AVOAccelaImageDemo/AVOAccelaImageDemo.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>222F845A-8132-4011-87E0-36342FA0007F</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/AvocadoCorp/AVOAccelaImage.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>222F845A-8132-4011-87E0-36342FA0007F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>222F845A-8132-4011-87E0-36342FA0007F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>AVOAccelaImage</string>
+		</dict>
+	</array>
+</dict>
+</plist>
