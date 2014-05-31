@@ -20,10 +20,62 @@
     return [self vImageScaledImageWithSize:newSize transform:[self transformForOrientation:newSize] drawTransposed:drawTransposed];
 }
 
+// Returns an affine transform that takes into account the image orientation when drawing a scaled image
+- (CGAffineTransform)transformForOrientation:(CGSize)newSize {
+    CGAffineTransform transform = CGAffineTransformIdentity;
+
+    switch (self.imageOrientation) {
+        case UIImageOrientationDown:           // EXIF = 3
+        case UIImageOrientationDownMirrored:   // EXIF = 4
+            transform = CGAffineTransformTranslate(transform, newSize.width, newSize.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+
+        case UIImageOrientationLeft:           // EXIF = 6
+        case UIImageOrientationLeftMirrored:   // EXIF = 5
+            transform = CGAffineTransformTranslate(transform, newSize.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+
+        case UIImageOrientationRight:          // EXIF = 8
+        case UIImageOrientationRightMirrored:  // EXIF = 7
+            transform = CGAffineTransformTranslate(transform, 0, newSize.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+
+        case UIImageOrientationUp:
+        case UIImageOrientationUpMirrored:
+        default:
+            break;
+    }
+
+    switch (self.imageOrientation) {
+        case UIImageOrientationUpMirrored:     // EXIF = 2
+        case UIImageOrientationDownMirrored:   // EXIF = 4
+            transform = CGAffineTransformTranslate(transform, newSize.width, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+
+        case UIImageOrientationLeftMirrored:   // EXIF = 5
+        case UIImageOrientationRightMirrored:  // EXIF = 7
+            transform = CGAffineTransformTranslate(transform, newSize.height, 0);
+            transform = CGAffineTransformScale(transform, -1, 1);
+            break;
+
+        case UIImageOrientationUp:
+        case UIImageOrientationDown:
+        case UIImageOrientationLeft:
+        case UIImageOrientationRight:
+        default:
+            break;
+    }
+
+    return transform;
+}
+
 - (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
-transform:(CGAffineTransform)transform
-drawTransposed:(BOOL)transpose
-{
+                             transform:(CGAffineTransform)transform
+                        drawTransposed:(BOOL)transpose {
 
     CGFloat scale = [UIScreen mainScreen].scale;
     CGRect newRect = CGRectIntegral(CGRectMake(0, 0, newSize.width * scale, newSize.height * scale));

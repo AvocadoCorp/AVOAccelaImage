@@ -74,9 +74,8 @@
 }
 
 - (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
-transform:(CGAffineTransform)transform
-drawTransposed:(BOOL)transpose
-{
+                             transform:(CGAffineTransform)transform
+                        drawTransposed:(BOOL)transpose {
 
     CGFloat scale = [UIScreen mainScreen].scale;
     CGRect newRect = CGRectIntegral(CGRectMake(0, 0, newSize.width * scale, newSize.height * scale));
