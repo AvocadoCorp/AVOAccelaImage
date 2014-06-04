@@ -20,6 +20,30 @@
     return [self vImageScaledImageWithSize:newSize transform:[self transformForOrientation:newSize] drawTransposed:drawTransposed];
 }
 
+- (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
+                                  bounds:(CGSize)bounds {
+    CGFloat horizontalRatio = bounds.width / self.size.width;
+    CGFloat verticalRatio = bounds.height / self.size.height;
+    CGFloat ratio;
+
+    switch (contentMode) {
+        case UIViewContentModeScaleAspectFill:
+            ratio = MAX(horizontalRatio, verticalRatio);
+            break;
+
+        case UIViewContentModeScaleAspectFit:
+            ratio = MIN(horizontalRatio, verticalRatio);
+            break;
+
+        default:
+            [NSException raise:NSInvalidArgumentException format:@"Unsupported content mode: %%@", PRIdLEAST8, contentMode];
+    }
+
+    CGSize newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
+
+    return [self resizedImage:newSize];
+}
+
 // Returns an affine transform that takes into account the image orientation when drawing a scaled image
 - (CGAffineTransform)transformForOrientation:(CGSize)newSize {
     CGAffineTransform transform = CGAffineTransformIdentity;
