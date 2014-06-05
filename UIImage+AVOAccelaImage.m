@@ -17,7 +17,12 @@
             drawTransposed = NO;
     }
 
-    return [self vImageScaledImageWithSize:newSize transform:[self transformForOrientation:newSize] drawTransposed:drawTransposed];
+    return [self vImageScaledImageWithSize:newSize
+                                blurRadius:0.f
+                               interations:0
+                                 tintColor:nil
+                                 transform:[self transformForOrientation:newSize]
+                            drawTransposed:drawTransposed];
 }
 
 - (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
@@ -98,12 +103,22 @@
 }
 
 - (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
+                            blurRadius:(CGFloat)radius
+                           interations:(NSUInteger)iterations
+                             tintColor:(UIColor *)tintColor
                              transform:(CGAffineTransform)transform
                         drawTransposed:(BOOL)transpose {
 
     CGFloat scale = [UIScreen mainScreen].scale;
-    CGRect newRect = CGRectIntegral(CGRectMake(0, 0, newSize.width * scale, newSize.height * scale));
-    CGRect transposedRect = CGRectMake(0, 0, newRect.size.height * scale, newRect.size.width * scale);
+    CGRect newRect = CGRectIntegral(CGRectMake(0,
+                                               0,
+                                               newSize.width * scale,
+                                               newSize.height * scale));
+
+    CGRect transposedRect = CGRectIntegral(CGRectMake(0,
+                                                      0,
+                                                      newRect.size.height * scale,
+                                                      newRect.size.width * scale));
 
     if (transpose) {
         newRect = transposedRect;
@@ -178,6 +193,59 @@
     free(sourceData);
 
     CGImageRef destRef = CGBitmapContextCreateImage(destContext);
+
+    if (radius && iterations) {
+        //boxsize must be an odd integer
+        uint32_t boxSize = (uint32_t)(radius * self.scale);
+        if (boxSize % 2 == 0) boxSize ++;
+
+        // create image buffers
+        vImage_Buffer buffer1, buffer2;
+        buffer1.width = buffer2.width = destWidth;
+        buffer1.height = buffer2.height = destHeight;
+        buffer1.rowBytes = buffer2.rowBytes = destBytesPerRow;
+        size_t bytes = buffer1.rowBytes * buffer1.height;
+        buffer1.data = malloc(bytes);
+        buffer2.data = malloc(bytes);
+
+        //create temp buffer
+        void *tempBuffer = malloc((size_t)vImageBoxConvolve_ARGB8888(&buffer1, &buffer2, NULL, 0, 0, boxSize, boxSize,
+                                                                     NULL, kvImageEdgeExtend + kvImageGetTempBufferSize));
+
+        //copy image data
+        CFDataRef dataSource = CGDataProviderCopyData(CGImageGetDataProvider(destRef));
+        memcpy(buffer1.data, CFDataGetBytePtr(dataSource), bytes);
+        CFRelease(dataSource);
+
+        for (NSUInteger i = 0; i < iterations; i++)
+        {
+            //perform blur
+            vImageBoxConvolve_ARGB8888(&buffer1, &buffer2, tempBuffer, 0, 0, boxSize, boxSize, NULL, kvImageEdgeExtend);
+
+            //swap buffers
+            void *temp = buffer1.data;
+            buffer1.data = buffer2.data;
+            buffer2.data = temp;
+        }
+        
+        //free buffers
+        free(buffer2.data);
+        free(tempBuffer);
+
+        destContext = CGBitmapContextCreate(buffer1.data, buffer1.width, buffer1.height,
+                                            8, buffer1.rowBytes, CGImageGetColorSpace(destRef),
+                                            CGImageGetBitmapInfo(destRef));
+
+        if (tintColor && CGColorGetAlpha(tintColor.CGColor) > 0.f) {
+            CGContextSetFillColorWithColor(destContext, [tintColor colorWithAlphaComponent:0.25].CGColor);
+            CGContextSetBlendMode(destContext, kCGBlendModePlusLighter);
+            CGContextFillRect(destContext, CGRectMake(0, 0, buffer1.width, buffer1.height));
+        }
+
+        destRef = CGBitmapContextCreateImage(destContext);
+        free(buffer1.data);
+    }
+
     scaledImage = [UIImage imageWithCGImage:destRef scale:[UIScreen mainScreen].scale orientation:self.imageOrientation];
     free(destData);
 

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'AVOAccelaImage'
-  s.version      = '0.0.1'
+  s.version      = '0.0.2'
   s.summary      = 'Avocado Image Utils using the Accelerate framework.'
 	s.homepage		 = "https://github.com/AvocadoCorp/AVOAccelaImage"
   s.authors      = { 'Ben D. Jones' => 'ben@avocado.io' }

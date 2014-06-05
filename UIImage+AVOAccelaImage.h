@@ -31,4 +31,25 @@
  */
 - (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
                                   bounds:(CGSize)bounds;
+
+
+/**
+ *  Resizes the image to the desired size using the Accelerate framework. Values can be passed for the transform operation to apply to the resized image or if the image should be drawn transposed. Optionally values can be passed for blur effects (radius, interations, tintColor).
+ *
+ *  @param newSize the new desired size of the image
+ *  @param radius radius of the iOS 7 style blur effect to apply to the resized image (resize is performed first)
+ *  @param interations the number of times the blur effect is calculated and applied. More interations will result in a crisper effect but it will also take longer to compute
+ *  @param tintColor the tint color to apply to the image
+ *  @param transform CGAfineTransform that will be used calculating the resized image
+ *  @param transpose if the image should be drawn transposed
+ *
+ * @return a new UIImage after the adjustments and resizing has taken place
+ */
+- (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
+                            blurRadius:(CGFloat)radius
+                           interations:(NSUInteger)iterations
+                             tintColor:(UIColor *)tintColor
+                             transform:(CGAffineTransform)transform
+                        drawTransposed:(BOOL)transpose;
+
 @end
