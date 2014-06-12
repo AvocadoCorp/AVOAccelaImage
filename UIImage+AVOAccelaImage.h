@@ -10,7 +10,7 @@
  *
  *  @return a CGAfineTransform that can be used for resizing or other operations
  */
-- (CGAffineTransform)transformForOrientation:(CGSize)newSize;
+- (CGAffineTransform)avo_transformForOrientation:(CGSize)newSize;
 
 /**
  *  Resizes the image according to the given content mode
@@ -19,7 +19,7 @@
  *
  * @return a new UIImage resizing has taken place
  */
-- (UIImage *)resizedImage:(CGSize)newSize;
+- (UIImage *)avo_resizedImage:(CGSize)newSize;
 
 /**
  *  Resizes the image according to the given content mode, taking into account the image's orientation
@@ -29,8 +29,8 @@
  *
  * @return a new UIImage after the adjustments and resizing has taken place
  */
-- (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
-                                  bounds:(CGSize)bounds;
+- (UIImage *)avo_resizedImageWithContentMode:(UIViewContentMode)contentMode
+                                      bounds:(CGSize)bounds;
 
 
 /**
@@ -45,11 +45,11 @@
  *
  * @return a new UIImage after the adjustments and resizing has taken place
  */
-- (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
-                            blurRadius:(CGFloat)radius
-                           interations:(NSUInteger)iterations
-                             tintColor:(UIColor *)tintColor
-                             transform:(CGAffineTransform)transform
-                        drawTransposed:(BOOL)transpose;
+- (UIImage *)avo_vImageScaledImageWithSize:(CGSize)newSize
+                                blurRadius:(CGFloat)radius
+                                iterations:(NSUInteger)iterations
+                                 tintColor:(UIColor *)tintColor
+                                 transform:(CGAffineTransform)transform
+                            drawTransposed:(BOOL)transpose;
 
 @end

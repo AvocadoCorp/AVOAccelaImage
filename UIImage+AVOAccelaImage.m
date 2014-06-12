@@ -2,7 +2,7 @@
 
 @implementation UIImage(AVOAccelaImage)
 
-- (UIImage *)resizedImage:(CGSize)newSize {
+- (UIImage *)avo_resizedImage:(CGSize)newSize {
     BOOL drawTransposed;
 
     switch (self.imageOrientation) {
@@ -17,16 +17,16 @@
             drawTransposed = NO;
     }
 
-    return [self vImageScaledImageWithSize:newSize
-                                blurRadius:0.f
-                               interations:0
-                                 tintColor:nil
-                                 transform:[self transformForOrientation:newSize]
-                            drawTransposed:drawTransposed];
+    return [self avo_vImageScaledImageWithSize:newSize
+                                    blurRadius:0.f
+                                    iterations:0
+                                     tintColor:nil
+                                     transform:[self avo_transformForOrientation:newSize]
+                                drawTransposed:drawTransposed];
 }
 
-- (UIImage *)resizedImageWithContentMode:(UIViewContentMode)contentMode
-                                  bounds:(CGSize)bounds {
+- (UIImage *)avo_resizedImageWithContentMode:(UIViewContentMode)contentMode
+                                      bounds:(CGSize)bounds {
     CGFloat horizontalRatio = bounds.width / self.size.width;
     CGFloat verticalRatio = bounds.height / self.size.height;
     CGFloat ratio;
@@ -46,11 +46,11 @@
 
     CGSize newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
 
-    return [self resizedImage:newSize];
+    return [self avo_resizedImage:newSize];
 }
 
 // Returns an affine transform that takes into account the image orientation when drawing a scaled image
-- (CGAffineTransform)transformForOrientation:(CGSize)newSize {
+- (CGAffineTransform)avo_transformForOrientation:(CGSize)newSize {
     CGAffineTransform transform = CGAffineTransformIdentity;
 
     switch (self.imageOrientation) {
@@ -102,12 +102,12 @@
     return transform;
 }
 
-- (UIImage *)vImageScaledImageWithSize:(CGSize)newSize
-                            blurRadius:(CGFloat)radius
-                           interations:(NSUInteger)iterations
-                             tintColor:(UIColor *)tintColor
-                             transform:(CGAffineTransform)transform
-                        drawTransposed:(BOOL)transpose {
+- (UIImage *)avo_vImageScaledImageWithSize:(CGSize)newSize
+                                blurRadius:(CGFloat)radius
+                                iterations:(NSUInteger)iterations
+                                 tintColor:(UIColor *)tintColor
+                                 transform:(CGAffineTransform)transform
+                            drawTransposed:(BOOL)transpose {
 
     CGFloat scale = [UIScreen mainScreen].scale;
     CGRect newRect = CGRectIntegral(CGRectMake(0,
