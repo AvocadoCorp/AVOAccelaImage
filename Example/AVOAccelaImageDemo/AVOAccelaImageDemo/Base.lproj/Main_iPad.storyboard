@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E9" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="G1t-kc-fng">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="E18-vr-SFL">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="G1t-kc-fng" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="jNU-b8-drV">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zZP-m8-vhS"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BHg-i1-Fv5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1890" y="-782"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -16,8 +31,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gXe-cA-Liz">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ExampleLargeImage" translatesAutoresizingMaskIntoConstraints="NO" id="gXe-cA-Liz">
+                                <rect key="frame" x="0.0" y="44" width="768" height="936"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                         </subviews>
@@ -29,6 +44,27 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gXe-cA-Liz" secondAttribute="bottom" id="zTf-QP-F9R"/>
                         </constraints>
                     </view>
+                    <toolbarItems>
+                        <barButtonItem title="Reset" id="Yhk-XY-Hlv">
+                            <connections>
+                                <action selector="resetButtonTapped:" destination="BYZ-38-t0r" id="1Qy-cB-DKl"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="fe8-DK-Qhe">
+                        <barButtonItem key="leftBarButtonItem" title="Fill" id="wUZ-XQ-f7Z">
+                            <connections>
+                                <action selector="fillButtonTapped:" destination="BYZ-38-t0r" id="lJp-2J-5qB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Blur" id="QcS-0Y-JRB">
+                            <connections>
+                                <action selector="blurButtonTapped:" destination="BYZ-38-t0r" id="7cJ-tX-rKU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="imageView" destination="gXe-cA-Liz" id="u4g-wZ-Ejs"/>
                     </connections>
@@ -37,6 +73,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="ExampleLargeImage" width="3488" height="2310"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

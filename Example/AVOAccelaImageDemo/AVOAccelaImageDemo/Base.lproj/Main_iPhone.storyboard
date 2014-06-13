@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E9" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MkY-EN-PTC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="gib-Cs-ltw">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="MkY-EN-PTC" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="xsP-PO-jhx">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="rQX-ph-T8Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pxa-mp-2Ac" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-665" y="-155"/>
+        </scene>
+        <!--View Controller - Example-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="AVOViewController" sceneMemberID="viewController">
@@ -16,19 +33,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MhL-Lj-seU">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ExampleLargeImage" translatesAutoresizingMaskIntoConstraints="NO" id="MhL-Lj-seU">
+                                <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lqH-sW-TVz">
+                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Reset" id="np9-QV-Ub3">
+                                        <connections>
+                                            <action selector="resetButtonTapped:" destination="vXZ-lx-hvc" id="iby-QP-N4P"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="MhL-Lj-seU" secondAttribute="bottom" id="9VO-pK-Zor"/>
                             <constraint firstAttribute="trailing" secondItem="MhL-Lj-seU" secondAttribute="trailing" id="Ukl-s0-MeX"/>
+                            <constraint firstItem="lqH-sW-TVz" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="WOu-15-0QB"/>
                             <constraint firstItem="MhL-Lj-seU" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-20" id="Zel-Sh-vGe"/>
+                            <constraint firstItem="lqH-sW-TVz" firstAttribute="top" secondItem="2fi-mo-0CV" secondAttribute="bottom" id="eWY-4p-Do3"/>
+                            <constraint firstAttribute="trailing" secondItem="lqH-sW-TVz" secondAttribute="trailing" id="giJ-es-agY"/>
                             <constraint firstItem="MhL-Lj-seU" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="pst-5H-kqg"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Example" id="cQP-Pk-etq">
+                        <barButtonItem key="leftBarButtonItem" title="Fill" id="GL4-28-8wx">
+                            <connections>
+                                <action selector="fillButtonTapped:" destination="vXZ-lx-hvc" id="AhW-u8-cDl"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Blur" id="FVz-cf-GDZ">
+                            <connections>
+                                <action selector="blurButtonTapped:" destination="vXZ-lx-hvc" id="pqo-8a-rTN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" barStyle="black"/>
                     <connections>
                         <outlet property="imageView" destination="MhL-Lj-seU" id="k9J-dF-e4H"/>
                     </connections>
@@ -37,6 +82,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="ExampleLargeImage" width="3488" height="2310"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

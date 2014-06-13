@@ -9,25 +9,49 @@
 #import "AVOViewController.h"
 #import <AVOAccelaImage/UIImage+AVOAccelaImage.h>
 
-@interface AVOViewController ()
+@import ImageIO;
+
+@interface AVOViewController () <NSURLSessionDelegate, NSURLSessionDataDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *runIncrementalButton;
 @end
 
 @implementation AVOViewController
 
+static UIImage * sourceImage = nil;
+
++ (void)initialize {
+    sourceImage = [UIImage imageNamed:@"ExampleLargeImage"];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    UIImage *largeImage = [UIImage imageNamed:@"ExampleLargeImage"];
-    CGSize preferredSize = [self preferredSizeForImageSize:largeImage.size constrainedToWidth:CGRectGetWidth(self.view.bounds)];
-    self.imageView.image = [largeImage resizedImage:preferredSize];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)blurButtonTapped:(id)sender {
+    CGSize preferredSize = [self preferredSizeForImageSize:sourceImage.size constrainedToWidth:CGRectGetWidth(self.view.bounds)];
+
+    self.imageView.image = [sourceImage avo_vImageScaledImageWithSize:preferredSize
+                                                           blurRadius:10
+                                                           iterations:1
+                                                            tintColor:nil
+                                                            transform:[sourceImage avo_transformForOrientation:preferredSize]
+                                                       drawTransposed:NO];
+}
+
+- (IBAction)fillButtonTapped:(id)sender {
+    self.imageView.image = [sourceImage avo_resizedImageWithContentMode:UIViewContentModeScaleAspectFill bounds:self.view.bounds.size];
+}
+
+- (IBAction)resetButtonTapped:(id)sender {
+    self.imageView.image = sourceImage;
 }
 
 - (CGSize)preferredSizeForImageSize:(CGSize)originalSize constrainedToWidth:(CGFloat)maxWidth {
