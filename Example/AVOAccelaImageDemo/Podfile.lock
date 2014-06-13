@@ -1,5 +1,5 @@
 PODS:
-  - AVOAccelaImage (0.0.1)
+  - AVOAccelaImage (0.1.0)
 
 DEPENDENCIES:
   - AVOAccelaImage (from `https://github.com/AvocadoCorp/AVOAccelaImage.git`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :git: https://github.com/AvocadoCorp/AVOAccelaImage.git
 
 SPEC CHECKSUMS:
-  AVOAccelaImage: a9908ad1ecc4be32ff8f0eaef9be5667e239fd36
+  AVOAccelaImage: ead8bdc2b7f1f92b9f113b7555ce6fe2252ed3ad
 
 COCOAPODS: 0.33.1

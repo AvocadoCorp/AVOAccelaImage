@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EA66A1E29C9D4546B7A18AA3"
+               BlueprintIdentifier = "A0F342338D2F427CAC54BF51"
                BuildableName = "libPods-AVOAccelaImage.a"
                BlueprintName = "Pods-AVOAccelaImage"
                ReferencedContainer = "container:Pods.xcodeproj">
