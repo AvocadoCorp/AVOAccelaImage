@@ -166,12 +166,6 @@
 
     CGFloat scale = [UIScreen mainScreen].scale;
     
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if ([[UIScreen mainScreen] respondsToSelector:@selector(nativeScale)]) {
-        scale = [UIScreen mainScreen].nativeScale;
-    }
-#endif
-    
     CGRect newRect = CGRectIntegral(CGRectMake(0,
                                                0,
                                                newSize.width * scale,
