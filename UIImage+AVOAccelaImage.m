@@ -102,6 +102,61 @@
     return transform;
 }
 
+- (UIImage *)avo_vImageTransposeWithOtherImage:(UIImage *)image
+                                       isOnTop:(BOOL)isOnTop {
+    CGImageRef topImageRef = isOnTop ? [self CGImage] : [image CGImage];
+    CGImageRef bottomImageRef = isOnTop ? [image CGImage] : [self CGImage];
+
+    CGDataProviderRef topProvider = CGImageGetDataProvider(topImageRef);
+    CFDataRef topBitmapData = CGDataProviderCopyData(topProvider);
+
+    size_t width = CGImageGetWidth(topImageRef);
+    size_t height = CGImageGetHeight(topImageRef);
+    size_t bytesPerRow = CGImageGetBytesPerRow(topImageRef);
+
+    vImage_Buffer topBuffer = {
+        .data = (void *)CFDataGetBytePtr(topBitmapData),
+        .width =  width,
+        .height = height,
+        .rowBytes = bytesPerRow
+    };
+
+    CGDataProviderRef bottomProvider = CGImageGetDataProvider(bottomImageRef);
+    CFDataRef bottomBitmapData = CGDataProviderCopyData(bottomProvider);
+
+    width = CGImageGetWidth(bottomImageRef);
+    height = CGImageGetHeight(bottomImageRef);
+    bytesPerRow = CGImageGetBytesPerRow(bottomImageRef);
+
+    vImage_Buffer bottomBuffer = {
+        .data = (void *)CFDataGetBytePtr(bottomBitmapData),
+        .width =  width,
+        .height = height,
+        .rowBytes = bytesPerRow
+    };
+
+    void *outBytes = malloc(height * bytesPerRow);
+    vImage_Buffer outBuffer = {
+        .data = outBytes,
+        .width = width,
+        .height = height,
+        .rowBytes = bytesPerRow
+    };
+
+    vImage_Error error = vImagePremultipliedAlphaBlend_ARGB8888(&topBuffer, &bottomBuffer, &outBuffer, kvImageDoNotTile);
+    if (error) {
+        NSLog(@"AccelaImage: Blend error %ld", error);
+    }
+
+    CGContextRef destContext = CGBitmapContextCreate(&outBuffer, width, height,
+                                                     bytesPerRow, bytesPerRow, CGColorSpaceCreateDeviceRGB(),
+                                                     kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Big);
+    CGImageRef destRef = CGBitmapContextCreateImage(destContext);
+    CGContextDrawImage(destContext, CGRectMake(0, 0, width, height), destRef);
+    UIImage *blendedImage = [UIImage imageWithCGImage:destRef scale:[UIScreen mainScreen].scale orientation:self.imageOrientation];
+    return blendedImage;
+}
+
 - (UIImage *)avo_vImageScaledImageWithSize:(CGSize)newSize
                                 blurRadius:(CGFloat)radius
                                 iterations:(NSUInteger)iterations
@@ -110,6 +165,7 @@
                             drawTransposed:(BOOL)transpose {
 
     CGFloat scale = [UIScreen mainScreen].scale;
+    
     CGRect newRect = CGRectIntegral(CGRectMake(0,
                                                0,
                                                newSize.width * scale,
