@@ -232,6 +232,7 @@
         free(buffer2.data);
         free(tempBuffer);
 
+        CGContextRelease(destContext);
         destContext = CGBitmapContextCreate(buffer1.data, buffer1.width, buffer1.height,
                                             8, buffer1.rowBytes, CGImageGetColorSpace(destRef),
                                             CGImageGetBitmapInfo(destRef));
@@ -241,7 +242,8 @@
             CGContextSetBlendMode(destContext, kCGBlendModePlusLighter);
             CGContextFillRect(destContext, CGRectMake(0, 0, buffer1.width, buffer1.height));
         }
-
+        
+        CGImageRelease(destRef);
         destRef = CGBitmapContextCreateImage(destContext);
         free(buffer1.data);
     }
